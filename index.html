@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Inventory Management</title>
+    
+    <script>
+        function toggleTable() {
+          var table = document.getElementById("crate-list-table");
+          if (table.style.display === "none") {
+            table.style.display = "block";
+          } else {
+            table.style.display = "none";
+          }
+        }
+      </script>
+
+<style>
+.textarea {
+  width: 50%;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  }
+
+input{
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  caption{
+    text-align: left;
+    justify-content: flex-start;
+  }
+  table{
+    border-style: groove;
+    border-width: 0.5px;
+    border-color: gray;
+    border-collapse: collapse;
+    width: 50%;
+  }
+  td, th {
+    border: 1px solid #777;
+    padding: 1rem;
+    text-align: left;
+}
+.red-star {
+    color: red;
+}
+
+      </style>
+  </head>
+  <body>
+    <h1>Inventory Management</h1>
+    <text >
+    <form action="/submit" method="post" class="textarea">
+      <label for="hub-input" >Hub<span class="red-star">*</span></label><br>
+      <input type="text" id="hub-input" name="hub-input" required><br><br>
+      
+      <label for="supplier-input">Supplier<span class="red-star">*</span></label><br>
+      <input type="number" id="supplier" name="supplier" required><br><br>
+      
+      <label for="name-input">Supplier Name</label><br>
+      <input type="text" id="name-input" name="name-input"><br><br>
+      
+      <label for="name-input">GRN</label><br>
+      <input type="text" id="grn-input" name="grn-input"><br><br>
+      
+      <input type="submit" value="Submit">
+    </form>
+  
+    <h2>SKU Summary</h2>
+    <table >
+      <caption>SKU table</caption>
+      <tr>
+        <th>No.</th>
+        <th>SKU</th>
+        <th>SKU Description</th>
+        <th>Standard Crate quantity</th>
+        <th>Procured Quantity</th>
+      </tr>
+      {% for item in sku_list %}
+      <tr>
+        <td><input type="checkbox" onclick="selectRow(this)">{{ item.idx }}</td>
+        <td>{{ item.sku }}</td>
+        <td>{{ item.sku_description }}</td>
+        <td>{{ item.standard_crate_quantity }}</td>
+        <td>{{ item.quantity}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  
+    <h2>Crate List <button onclick="toggleTable()"> ^ </button></h2>
+    <div id="crate-list-table" style="display:block;">
+    <table >
+      <caption>Crate table</caption>
+      <tr>
+        <th>No.</th>
+        <th>Crate</th>
+        <th>SKU</th>
+        <th>Packed Quantity</th>
+        <th>Crate weight</th>
+        <th>Is Final Crate</th>
+      </tr>
+      {% for item in crate_list %}
+      <tr>
+        <td><input type="checkbox" onclick="selectRow(this)">{{ item.idx }}</td>
+        <td>{{ item.crate }}</td>
+        <td>{{ item.sku }}</td>
+        <td>{{ item.packed_quantity }}</td>
+        <td>{{ item.crate_weight }}</td>
+        <td>{{ item.is_final_crate }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+  </body>
+</html>
